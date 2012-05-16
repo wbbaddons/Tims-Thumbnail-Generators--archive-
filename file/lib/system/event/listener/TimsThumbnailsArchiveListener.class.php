@@ -44,27 +44,19 @@ class TimsThumbnailsArchiveListener implements \wcf\system\event\IEventListener 
 	public function generateThumbnail() {
 		switch ($this->eventObj->eventAttachment->fileType) {
 			case 'application/zip':
+				$file = new \wcf\system\io\Zip($this->eventObj->eventAttachment->getLocation());
+			break;
 			case 'application/x-tar':
+				$file = new \wcf\system\io\Tar($this->eventObj->eventAttachment->getLocation());
 			break;
 			default:
 				return;
 		}
+		$files = $file->getContentList();
 		
 		// load data
 		$tinyAdapter = \wcf\system\image\ImageHandler::getInstance()->getAdapter();
 		$adapter = \wcf\system\image\ImageHandler::getInstance()->getAdapter();
-		switch ($this->eventObj->eventAttachment->fileType) {
-			case 'application/zip':
-				$file = new \wcf\system\io\Zip($this->eventObj->eventAttachment->getLocation());
-				$file->jumpToCentralDirectory();
-				$centralDirectory = $file->readCentralDirectory();
-				$files = $centralDirectory['files'];
-			break;
-			case 'application/x-tar':
-				$file = new \wcf\system\io\Tar($this->eventObj->eventAttachment->getLocation());
-				$files = $file->getContentList();
-			break;
-		}
 		
 		// plug the sheeps onto the wooden sticks and submerge them in the color
 		$tinyAdapter->createEmptyImage(144, 144);
