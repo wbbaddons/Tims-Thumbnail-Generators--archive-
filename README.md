@@ -1,7 +1,7 @@
 Tims Thumbnail-Generators (archive)
 ===================================
 
-Tims Thumbnail-Generators (archive) extends WoltLab Community Framework with thumbnails for archives files.. 
+Tims Thumbnail-Generators (archive) extends WoltLab Community Framework with thumbnails for archives.
 
 
 Version notes
