@@ -42,6 +42,9 @@ class TimsThumbnailsArchiveListener implements \wcf\system\event\IEventListener 
 	 * Actually generate the thumbnail.
 	 */
 	public function generateThumbnail() {
+		// someone else already grabbed this one
+		if (count($this->eventObj->eventData)) return;
+		
 		switch ($this->eventObj->eventAttachment->fileType) {
 			case 'application/zip':
 				$file = new \wcf\system\io\Zip($this->eventObj->eventAttachment->getLocation());
