@@ -70,10 +70,17 @@ class TimsThumbnailsArchiveListener implements \wcf\system\event\IEventListener 
 		$i = 1;
 		foreach ($files as $file) {
 			// tabs cannot be displayed with gdlib
-			$file = str_replace("\t", "    ", $file['filename']);
+			$line = str_replace("\t", "    ", \wcf\util\StringUtil::substring(\wcf\util\StringUtil::trim('.'.$line), 1));
 			
-			$tinyAdapter->drawText($file, 5, $i * 10);
-			$adapter->drawText($file, 5, $i * 10);
+			if (IMAGE_ADAPTER_TYPE == 'imagick') {
+				$tinyAdapter->drawText($file, 5, $i * 13);
+				$adapter->drawText($file, 5, $i * 13);
+			}
+			else {
+				$tinyAdapter->drawText($file, 5, $i * 13 - 13);
+				$adapter->drawText($file, 5, $i * 13 - 13);
+			}
+			
 			$i++;
 		}
 		
